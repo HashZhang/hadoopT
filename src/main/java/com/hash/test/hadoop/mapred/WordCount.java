@@ -21,6 +21,7 @@ public class WordCount {
     private static void deleteDir(Configuration conf, String dirPath) throws IOException {
         FileSystem fs = FileSystem.get(conf);
         Path targetPath = new Path(dirPath);
+        //如果文件夹存在，则删除
         if (fs.exists(targetPath)) {
             boolean delResult = fs.delete(targetPath, true);
             if (delResult) {
