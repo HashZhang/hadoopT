@@ -35,7 +35,7 @@ public class TestHDFS {
 //        os.close();
 
         // 显示在hdfs的/user/fkong下指定文件的内容
-        InputStream is = fs.open(new Path("/test/output/part-00000"));
+        InputStream is = fs.open(new Path("/test/output/part-r-00000"));
         IOUtils.copyBytes(is, System.out, 1024, true);
     }
 }
