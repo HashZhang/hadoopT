@@ -41,9 +41,7 @@ public class WordCount extends Configured implements Tool {
     }
 
     public int run(String[] strings) throws Exception {
-        //设置工作类，就是main方法所在类
         System.setProperty("HADOOP_USER_NAME", "sfdba");
-
 
         Job job = Job.getInstance();
         job.setJar("D:\\Users\\862911\\hadoopT\\target\\hadoopT-1.0-SNAPSHOT.jar");
