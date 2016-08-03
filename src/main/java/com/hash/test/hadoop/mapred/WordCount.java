@@ -32,25 +32,29 @@ public class WordCount {
     }
 
     public static void main(String[] args) throws IOException {
+        //设置工作类，就是main方法所在类
         JobConf jobConf = new JobConf(WordCount.class);
-        jobConf.set("mapred.jar","D:\\Users\\862911\\hadoopT\\target\\hadoopT-1.0-SNAPSHOT.jar");
+        //配置需要运行的JAR在本地的位置，就是本类所在的JAR包
+        jobConf.set("mapred.jar", "D:\\Users\\862911\\hadoopT\\target\\hadoopT-1.0-SNAPSHOT.jar");
+        //远程Hadoop集群的用户，防止没有权限
         System.setProperty("HADOOP_USER_NAME", "sfdba");
+        //设置Job名称
         jobConf.setJobName("My Word Count");
-
+        //设置每阶段输出格式
         jobConf.setOutputKeyClass(Text.class);
         jobConf.setOutputValueClass(IntWritable.class);
-
+        //设置Map的类和reduce的类
         jobConf.setMapperClass(Map.class);
         jobConf.setReducerClass(Reduce.class);
-
+        //设置输入输出格式
         jobConf.setInputFormat(TextInputFormat.class);
         jobConf.setOutputFormat(TextOutputFormat.class);
-
+        //设置输入输出路径，远程Hdfs需要加链接地址
         FileInputFormat.setInputPaths(jobConf, args[0]);
         FileOutputFormat.setOutputPath(jobConf, new Path(args[1]));
-
+        //先删除输出目录
         deleteDir(jobConf, args[1]);
-
+        //执行Job
         JobClient.runJob(jobConf);
     }
 }
