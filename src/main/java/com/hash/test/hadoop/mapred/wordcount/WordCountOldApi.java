@@ -1,5 +1,6 @@
-package com.hash.test.hadoop.mapred;
+package com.hash.test.hadoop.mapred.wordcount;
 
+import com.hash.test.hadoop.hdfs.HDFS;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -18,20 +19,6 @@ import java.util.StringTokenizer;
  * @date 2016/7/20
  */
 public class WordCountOldApi {
-    private static void deleteDir(Configuration conf, String dirPath) throws IOException {
-        FileSystem fs = FileSystem.get(conf);
-        Path targetPath = new Path(dirPath);
-        //如果文件夹存在，则删除
-        if (fs.exists(targetPath)) {
-            boolean delResult = fs.delete(targetPath, true);
-            if (delResult) {
-                System.out.println(targetPath + " has been deleted sucessfullly.");
-            } else {
-                System.out.println(targetPath + " deletion failed.");
-            }
-        }
-    }
-
     public static void main(String[] args) throws IOException {
         //设置工作类，就是main方法所在类
         JobConf jobConf = new JobConf(WordCountOldApi.class);
@@ -54,7 +41,7 @@ public class WordCountOldApi {
         FileInputFormat.setInputPaths(jobConf, args[0]);
         FileOutputFormat.setOutputPath(jobConf, new Path(args[1]));
         //先删除输出目录
-        deleteDir(jobConf, args[1]);
+        HDFS.deleteDir(args[1]);
         //执行Job
         JobClient.runJob(jobConf);
     }
