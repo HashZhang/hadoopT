@@ -1,9 +1,6 @@
 package com.hash.test.hadoop.mapred.wordcount;
 
-import com.hash.test.hadoop.hdfs.HDFS;
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -49,14 +46,14 @@ public class WordCount extends Configured implements Tool {
         FileInputFormat.setInputPaths(job, strings[0]);
         FileOutputFormat.setOutputPath(job, new Path(strings[1]));
         //先删除输出目录
-        HDFS.deleteDir(strings[1]);
-
+//        HDFS.deleteDir(strings[1]);
         final boolean success = job.waitForCompletion(true);
         return success ? 0 : 1;
     }
 
     public static void main(String[] args) throws Exception {
-        int ret = ToolRunner.run(new WordCount(),args);
+        WordCount wordCount = new WordCount();
+        int ret = ToolRunner.run(wordCount, args);
         System.exit(ret);
     }
 }
